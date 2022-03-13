@@ -1,10 +1,8 @@
-import { rightLogShift } from 'mathjs';
-import React, { useEffect, useRef, useState } from 'react'
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import logo from "../assests/images/logo.png"
-import Loader from '../components/Loader';
-import { createPin, generateOtp, login, resetPin, verifyOtp } from '../store/actions/authActions';
+import React, { useEffect, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux';
+import logo from "../../assests/images/logo.png"
+import Loader from '../../components/loader/Loader';
+import { createPin, generateOtp, login, resetPin, verifyOtp } from '../../store/actions/authActions';
 import "./authentication.scss";
 
 const AuthenticationPage = () => {
