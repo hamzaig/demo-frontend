@@ -1,5 +1,7 @@
+import { InvertColorsOff } from '@mui/icons-material';
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import logo from "../../assests/images/logo.png"
 import Loader from '../../components/loader/Loader';
 import { createPin, generateOtp, login, resetPin, verifyOtp } from '../../store/actions/authActions';
@@ -7,6 +9,7 @@ import "./authentication.scss";
 
 const AuthenticationPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const [forgotPassword, setForgotPassword] = useState(false);
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState("");
@@ -45,7 +48,11 @@ const AuthenticationPage = () => {
       setOtp("");
       setPhone("");
     }
-  }, [pinResetInfo])
+    console.log(userLoginData?.user);
+    if (userLoginData?.user) {
+      navigate("/khata")
+    }
+  }, [pinResetInfo, successCreatePin, successUserLogin, navigate, userLoginData])
 
   const startTimer = (cb) => {
     let counter = 1;
@@ -74,7 +81,7 @@ const AuthenticationPage = () => {
       }
       dispatch(createPin(user.phone, user.otp, pinCode));
     } else if (errorOtp === "user Already registered") {
-      console.log(phone, pinCode);
+      // console.log(phone, pinCode);
       dispatch(login(phone, pinCode));
     }
   }

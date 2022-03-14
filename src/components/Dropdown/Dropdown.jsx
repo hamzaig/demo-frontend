@@ -1,33 +1,42 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import "./dropdown.css";
 
-const clickToShowDropDown = (contentRef, toggleRef) => {
-  document.addEventListener("mousedown", (e) => {
-    // console.log(toggleRef.current.contains(e.target));
-    if (toggleRef.current && toggleRef.current.contains(e.target)) {
-      contentRef.current.classList.toggle("active")
+const clickOutsideRef = (content_ref, toggle_ref) => {
+  document.addEventListener('mousedown', (e) => {
+    // user click toggle
+    if (toggle_ref.current && toggle_ref.current.contains(e.target)) {
+      content_ref.current.classList.toggle('active')
     } else {
-      if (contentRef.current && !contentRef.current.contains(e.target)) {
-        contentRef.current.classList.remove("active")
+      // user click outside toggle and content
+      if (content_ref.current && !content_ref.current.contains(e.target)) {
+        content_ref.current.classList.remove('active')
       }
     }
   })
 }
 
 const Dropdown = (props) => {
-  const dropdownToggleElement = useRef();
-  const dropdownContentElement = useRef();
 
-  clickToShowDropDown(dropdownContentElement, dropdownToggleElement)
+  const dropdownToggleRef = useRef();
+  const contentRef = useRef()
+
+  // const toggleContent = (e) => {
+  //   contentRef.current.classList.toggle('active')
+  // }
+
+  useEffect(() => {
+    clickOutsideRef(contentRef, dropdownToggleRef)
+  }, [])
+
 
   return (
     <div className="dropdown">
-      <button ref={dropdownToggleElement} className="dropdown__toggle">
+      <button ref={dropdownToggleRef} className="dropdown__toggle">
         {props.icon && <i className={props.icon}></i>}
         {props.badge && <span className='dropdown__toggle-badge'>{props.badge}</span>}
         {props.customToggle && props.customToggle()}
       </button>
-      <div ref={dropdownContentElement} className={`dropdown__content`}>
+      <div className={`dropdown__content`} ref={contentRef}>
         {props.contentData && props.renderItems && props.contentData.map((item, index) => props.renderItems(item, index))}
         {props.renderFooter && (
           <div className="dropdown__footer">

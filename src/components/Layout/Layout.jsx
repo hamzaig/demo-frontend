@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import Customers from '../../pages/Customers/Customers';
 import Dashboard from '../../pages/Dashboard/Dashboard';
 import { setModeRedux, setColorRedux } from "../../store/actions/ThemeAction";
@@ -10,6 +10,10 @@ import "./layout.css";
 const Layout = (props) => {
   const dispatch = useDispatch();
   const theme = useSelector(state => state.theme);
+  const navigate = useNavigate();
+
+  const userLogin = useSelector(state => state.userLogin);
+  const { loading: loadingUserLogin, error: errorUserLogin, success: successUserLogin, userData: userLoginData } = userLogin;
 
   useEffect(() => {
     const themeClass = localStorage.getItem('themeMode', 'theme-mode-light');
@@ -17,7 +21,11 @@ const Layout = (props) => {
     dispatch(setModeRedux(themeClass));
     dispatch(setColorRedux(colorClass));
 
-  }, [dispatch])
+    if (!userLoginData?.user) {
+      navigate("/login")
+    }
+
+  }, [dispatch, userLoginData, navigate, successUserLogin])
 
   return (
     <div className={`layout ${theme.mode} ${theme.color}`}>

@@ -55,7 +55,7 @@ const color_settings = [
     },
 ]
 
-const clickOutsideRef = (content_ref, toggle_ref) => {
+const clickOutsideRefTheme = (content_ref, toggle_ref) => {
     document.addEventListener('mousedown', (e) => {
         // user click toggle
         if (toggle_ref.current && toggle_ref.current.contains(e.target)) {
@@ -70,18 +70,14 @@ const clickOutsideRef = (content_ref, toggle_ref) => {
 }
 
 const ThemeMenu = () => {
-
-    const menu_ref = useRef(null)
-    const menu_toggle_ref = useRef(null)
-
-    clickOutsideRef(menu_ref, menu_toggle_ref)
+    const menu_ref = useRef()
+    const menu_toggle_ref = useRef()
+    clickOutsideRefTheme(menu_ref, menu_toggle_ref)
 
     const setActiveMenu = () => menu_ref.current.classList.add('active')
-
     const closeMenu = () => menu_ref.current.classList.remove('active')
 
     const [currMode, setcurrMode] = useState('light')
-
     const [currColor, setcurrColor] = useState('blue')
 
     const dispatch = useDispatch()

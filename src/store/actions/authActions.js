@@ -1,5 +1,5 @@
 import axios from "axios";
-import { USER_CREATE_PIN_FAIL, USER_CREATE_PIN_REQUEST, USER_CREATE_PIN_SUCCESS, USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_OTP_GENERATE_FAIL, USER_OTP_GENERATE_REQUEST, USER_OTP_GENERATE_SUCCESS, USER_PIN_RESET_FAIL, USER_PIN_RESET_REQUEST, USER_PIN_RESET_SUCCESS, USER_VERIFY_OTP_FAIL, USER_VERIFY_OTP_REQUEST, USER_VERIFY_OTP_SUCCESS } from "../constants/authConstants"
+import { USER_CREATE_PIN_FAIL, USER_CREATE_PIN_REQUEST, USER_CREATE_PIN_RESET, USER_CREATE_PIN_SUCCESS, USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_RESET, USER_LOGIN_SUCCESS, USER_LOGOUT_REQUEST, USER_LOGOUT_SUCCESS, USER_OTP_GENERATE_FAIL, USER_OTP_GENERATE_REQUEST, USER_OTP_GENERATE_RESET, USER_OTP_GENERATE_SUCCESS, USER_PIN_RESET_FAIL, USER_PIN_RESET_REQUEST, USER_PIN_RESET_SUCCESS, USER_VERIFY_OTP_FAIL, USER_VERIFY_OTP_REQUEST, USER_VERIFY_OTP_RESET, USER_VERIFY_OTP_SUCCESS } from "../constants/authConstants"
 
 export function generateOtp(number) {
   return async (dispatch) => {
@@ -115,5 +115,21 @@ export function resetPin(phone, otp = "", pin = "") {
     } catch (error) {
       dispatch({ type: USER_PIN_RESET_FAIL, payload: error.response && error.response.data.message ? error.response.data.message : error.message });
     }
+  }
+}
+
+export function logoutUser() {
+  return async (dispatch) => {
+
+    dispatch({ type: USER_LOGOUT_REQUEST });
+
+    localStorage.removeItem("userInfo")
+
+    dispatch({ type: USER_LOGIN_RESET })
+    dispatch({ type: USER_OTP_GENERATE_RESET })
+    dispatch({ type: USER_VERIFY_OTP_RESET })
+    dispatch({ type: USER_CREATE_PIN_RESET })
+
+    dispatch({ type: USER_LOGOUT_SUCCESS });
   }
 }
