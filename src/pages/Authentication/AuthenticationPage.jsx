@@ -48,9 +48,22 @@ const AuthenticationPage = () => {
       setOtp("");
       setPhone("");
     }
-    console.log(userLoginData?.user);
+
     if (userLoginData?.user) {
       navigate("/khata")
+    }
+    return () => {
+      setForgotPassword("");
+      setPhone("");
+      setOtp("");
+      setPinCode("");
+      setConfirmPinCode("");
+      setTimer("");
+      setIsPhoneValid("");
+      setIsOtpValid("");
+      setIsPinValid("");
+      setIsConfirmPinValid("");
+      setInverseLoginAndReset("");
     }
   }, [pinResetInfo, successCreatePin, successUserLogin, navigate, userLoginData])
 

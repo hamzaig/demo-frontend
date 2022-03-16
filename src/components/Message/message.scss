@@ -1,0 +1,14 @@
+.success {
+  background-color: var(--main-color);
+  color: var(--main-bg);
+  padding: 12px 12px;
+  margin: 12px 0px;
+}
+.danger {
+  background-color: var(--main-color-red);
+  color: var(--main-bg);
+  padding: 12px 12px;
+  margin: 12px 0px;
+  box-shadow: var(--box-shadow);
+  border-radius: var(--border-radius);
+}

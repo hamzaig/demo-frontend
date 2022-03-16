@@ -1,5 +1,5 @@
 import axios from "axios";
-import { USER_CREATE_PIN_FAIL, USER_CREATE_PIN_REQUEST, USER_CREATE_PIN_RESET, USER_CREATE_PIN_SUCCESS, USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_RESET, USER_LOGIN_SUCCESS, USER_LOGOUT_REQUEST, USER_LOGOUT_SUCCESS, USER_OTP_GENERATE_FAIL, USER_OTP_GENERATE_REQUEST, USER_OTP_GENERATE_RESET, USER_OTP_GENERATE_SUCCESS, USER_PIN_RESET_FAIL, USER_PIN_RESET_REQUEST, USER_PIN_RESET_SUCCESS, USER_VERIFY_OTP_FAIL, USER_VERIFY_OTP_REQUEST, USER_VERIFY_OTP_RESET, USER_VERIFY_OTP_SUCCESS } from "../constants/authConstants"
+import { USER_CREATE_PIN_FAIL, USER_CREATE_PIN_REQUEST, USER_CREATE_PIN_RESET, USER_CREATE_PIN_SUCCESS, USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_RESET, USER_LOGIN_SUCCESS, USER_LOGOUT_REQUEST, USER_LOGOUT_SUCCESS, USER_OTP_GENERATE_FAIL, USER_OTP_GENERATE_REQUEST, USER_OTP_GENERATE_RESET, USER_OTP_GENERATE_SUCCESS, USER_PIN_CHANGE_FAIL, USER_PIN_CHANGE_REQUEST, USER_PIN_CHANGE_SUCCESS, USER_PIN_RESET_FAIL, USER_PIN_RESET_REQUEST, USER_PIN_RESET_SUCCESS, USER_VERIFY_OTP_FAIL, USER_VERIFY_OTP_REQUEST, USER_VERIFY_OTP_RESET, USER_VERIFY_OTP_SUCCESS } from "../constants/authConstants"
 
 export function generateOtp(number) {
   return async (dispatch) => {
@@ -117,6 +117,37 @@ export function resetPin(phone, otp = "", pin = "") {
     }
   }
 }
+
+export function changePin(pin, newPin) {
+  return async (dispatch, getState) => {
+    try {
+
+      dispatch({ type: USER_PIN_CHANGE_REQUEST });
+
+      const { userLogin: { userData } } = getState();
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userData.token}`,
+          "Content-Type": "application/json",
+        }
+      };
+
+      console.log(userData.token);
+
+      await axios.post("/api/users/changePin", { pin, newPin }, config);
+
+      // console.log(data);
+
+      dispatch({ type: USER_PIN_CHANGE_SUCCESS });
+
+    } catch (error) {
+      dispatch({ type: USER_PIN_CHANGE_FAIL, payload: error.response && error.response.data.message ? error.response.data.message : error.message });
+    }
+  }
+}
+
+
 
 export function logoutUser() {
   return async (dispatch) => {

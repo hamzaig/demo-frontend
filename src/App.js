@@ -8,6 +8,7 @@ import "./assests/boxicons-2.0.7/css/boxicons.min.css";
 import "./assests/css/grid.css";
 import "./assests/css/index.css";
 import { useSelector } from 'react-redux';
+import ProtectedRoute from './components/protectedroute/ProtectedRoute';
 
 
 function App() {
@@ -18,7 +19,9 @@ function App() {
         <Route path='/' element={<WelcomePage />} exect />
         <Route path='/login' element={<AuthenticationPage />} exect />
         <Route path='/register' element={<AuthenticationPage />} exect />
-        <Route path='/khata/*' element={<Layout />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path='/khata/*' element={<Layout />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
