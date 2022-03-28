@@ -1,11 +1,9 @@
-import React, {useState} from 'react'
+import React, { useEffect, useState } from 'react'
 
 import './table.css'
 
 const Table = props => {
-
     const initDataShow = props.limit && props.bodyData ? props.bodyData.slice(0, Number(props.limit)) : props.bodyData
-
     const [dataShow, setDataShow] = useState(initDataShow)
 
     let pages = 1
@@ -13,9 +11,9 @@ const Table = props => {
     let range = []
 
     if (props.limit !== undefined) {
-        let page = Math.floor(props.bodyData.length / Number(props.limit))
-        pages = props.bodyData.length % Number(props.limit) === 0 ? page : page + 1
-        range = [...Array(pages).keys()]
+        let page = Math.floor(props.bodyData && (props.bodyData.length / Number(props.limit)))
+        pages = props.bodyData && (props.bodyData.length % Number(props.limit) === 0) ? page : page + 1
+        range = props.bodyData && [...Array(pages).keys()]
     }
 
     const [currPage, setCurrPage] = useState(0)

@@ -3,6 +3,7 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "@redux-devtools/extension";
 import { createPinReducer, userLoginReducer, userLogoutReducer, userOtpGenerateReducer, userPinChangeReducer, userPinResetReducer, verifyOtpReducer } from "./reducers/authReducer";
 import ThemeReducer from "./reducers/ThemeReducer";
+import { deleteBusinessReducer, getBusinessesReducer } from "./reducers/businessReducer";
 
 const userDataFromLocalStorage = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) : {};
 
@@ -14,7 +15,9 @@ const reducer = combineReducers({
   userLogin: userLoginReducer,
   userLogout: userLogoutReducer,
   pinReset: userPinResetReducer,
-  pinChange: userPinChangeReducer
+  pinChange: userPinChangeReducer,
+  businesses: getBusinessesReducer,
+  deleteBusiness: deleteBusinessReducer,
 });
 
 const middleware = [thunk];

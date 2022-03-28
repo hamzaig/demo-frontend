@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
+import AddBusiness from '../../pages/businesses/AddBusiness';
+import Businesses from '../../pages/businesses/Businesses';
 import ChangePin from '../../pages/change-pin/ChangePin';
 import Customers from '../../pages/Customers/Customers';
 import Dashboard from '../../pages/Dashboard/Dashboard';
@@ -30,6 +32,8 @@ const Layout = (props) => {
         <div className="layout__content-main">
           <Routes>
             <Route path='/' element={<Dashboard />} exect />
+            <Route path='/businesses' element={<Businesses exect />} />
+            <Route path='/businesses/add-business' element={<AddBusiness exect />} />
             <Route path='/customers' element={<Customers exect />} />
             <Route path='/change-pin' element={<ChangePin exect />} />
           </Routes>

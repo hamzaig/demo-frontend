@@ -1,0 +1,5 @@
+#edit-business:hover,
+#delete-business:hover,
+.add-bussiness-btn:hover {
+  cursor: pointer;
+}
